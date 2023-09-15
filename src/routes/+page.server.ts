@@ -1,20 +1,40 @@
-export type Food = {
-  name: string;
-  price: number;
-};
+import { initialFoods } from "$lib/server/databaseSeed.js";
+import prisma from "$lib/server/prisma";
 
-let foods: Food[] = [];
+export const load = async () => {
+  console.log("Loading data from server");
+
+  // await prisma.food.deleteMany({});
+  const existingFoods = await prisma.food.findMany({});
+  if (existingFoods.length === 0) {
+    await prisma.food.createMany({ data: initialFoods });
+  }
+  const foods = await prisma.food.findMany({});
+  const foodDtos = foods;
+
+  const cartItems = await prisma.cartItem.findMany({ include: { food: true } });
+  console.log("cartItems: ", cartItems);
+
+  console.log("dto:", foodDtos);
+
+  return { foodDtos, cartItems };
+};
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-  default: async (event) => {
-    const formData: FormData = await event.request.formData();
-    // console.log("formData:", formData);
-    const json = Object.fromEntries(formData.entries());
+  order: async ({ request }) => {
+    const data = await request.formData();
+    console.log("Ordering...");
+
+    const json = Object.fromEntries(data.entries());
     console.log("json:", json);
 
-    const food: Food = json as any;
-    foods.push(food);
-    console.log("foods:", foods);
+    const items = data.getAll("id");
+    const quantities = data.getAll("quantity");
+
+    console.log("items:", items);
+    console.log("quantities:", quantities);
+
+    return {};
   },
 };

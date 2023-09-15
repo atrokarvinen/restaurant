@@ -1,51 +1,101 @@
 <script lang="ts">
+  import { BACKEND_URL } from "$lib/constants";
+  import { initialFoods } from "$lib/server/databaseSeed";
+  import axios from "axios";
   import Cart from "./Cart.svelte";
   import FoodItem from "./FoodItem.svelte";
-  import type { Food } from "./types";
+  import type { CartItem, CartType, Food } from "./types";
 
-  let foods: Food[] = [
-    { name: "Burger", price: 10.45 },
-    { name: "Salad", price: 8.1 },
-    { name: "Salmon", price: 23.99 },
-  ];
+  export let data;
+  // console.log("data:", data);
+  const loadedFoods = data.foodDtos;
+  const loadedCartItems = data.cartItems;
 
-  let cartItems: Food[] = [];
+  let foods: Food[] = loadedFoods ?? initialFoods;
 
-  let name = "test";
-  let price = "10";
-  const handleSubmit = async (e: SubmitEvent) => {
-    const data = new FormData(e.target as HTMLFormElement);
-    const values = { name, price: +price };
-    console.log("submitted:", values);
-    console.log("form data:", data);
-    foods = [...foods, { ...values }];
-  };
+  // let cartItems: CartType = { items: {} };
+  let asDict = loadedCartItems.reduce((prev, curr) => {
+    return { ...prev, [curr.id]: curr };
+  }, {});
+  console.log("asDict:", asDict);
 
-  const addToCart = (food: Food) => {
+  let cartItems: CartType = loadedCartItems ? { items: asDict } : { items: {} };
+
+  console.log("[UI] cartItems:", cartItems);
+
+  const addToCart = async (food: Food) => {
     console.log("Added to cart:", food);
-    cartItems = [...cartItems, food];
+    try {
+      const payload: Omit<CartItem, "id"> = { food: food, quantity: 1 };
+      const response = await axios.post(`${BACKEND_URL}/cart`, payload);
+      console.log("response: ", response.data);
+      cartItems = {
+        ...cartItems,
+        items: {
+          ...cartItems.items,
+          [response.data.id]: {
+            id: response.data.id,
+            food,
+            quantity: response.data.quantity,
+          },
+        },
+      };
+    } catch (error) {
+      console.log("error adding to cart: ", error);
+    }
   };
 
-  const removeCartItem = (item: Food) => {
-    cartItems = cartItems.filter((ci) => ci.name !== item.name);
+  const removeCartItem = async (item: CartItem) => {
+    console.log("Removed from cart:", item);
+
+    try {
+      await axios.delete(`${BACKEND_URL}/cart/${item.id}`);
+      const items = cartItems.items;
+      delete items[item.id];
+      cartItems = { ...cartItems, items };
+      console.log("items after delete:", cartItems);
+    } catch (error) {
+      console.log("failed to delete cart item");
+    }
+  };
+
+  const incrementCartItem = (item: CartItem) => {
+    console.log("Increased cart quantity of:", item);
+    changeCartItemQuantity(item.id, 1);
+  };
+
+  const decrementCartItem = (item: CartItem) => {
+    console.log("Decreased cart quantity of:", item);
+    changeCartItemQuantity(item.id, -1);
+  };
+
+  const changeCartItemQuantity = async (id: number, change: number) => {
+    const existingItem = cartItems.items[id];
+    cartItems = {
+      ...cartItems,
+      items: {
+        ...cartItems.items,
+        [id]: {
+          ...existingItem,
+          quantity: existingItem.quantity + change,
+        },
+      },
+    };
+    try {
+      await axios.put(`${BACKEND_URL}/cart`, { id, change });
+    } catch (error) {
+      console.log("failed to change cart item quantity", error);
+    }
   };
 </script>
 
-<form on:submit={(e) => handleSubmit(e)}>
-  <label>
-    Name
-    <input name="name" bind:value={name} />
-  </label>
-
-  <label>
-    Price
-    <input name="price" bind:value={price} type="number" />
-  </label>
-
-  <button type="submit">Submit</button>
-</form>
-
-<Cart items={cartItems} {removeCartItem} />
+<Cart
+  items={cartItems}
+  {removeCartItem}
+  {incrementCartItem}
+  {decrementCartItem}
+/>
+<button>Order</button>
 
 <div>
   <h1>Foods:</h1>
@@ -55,10 +105,5 @@
         <FoodItem {food} {addToCart} />
       </li>
     {/each}
-    {Array.from(Array(3).keys())
-      .map((num) => {
-        return `Kana #${num}`;
-      })
-      .join(", ")}
   </ul>
 </div>

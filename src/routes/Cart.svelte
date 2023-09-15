@@ -1,22 +1,38 @@
 <script lang="ts">
-  import type { Food } from "./types";
+  import type { CartItem, CartType } from "./types";
 
-  export let items: Food[];
-  export let removeCartItem: (item: Food) => void;
+  export let items: CartType;
+  export let incrementCartItem: (item: CartItem) => void;
+  export let decrementCartItem: (item: CartItem) => void;
+  export let removeCartItem: (item: CartItem) => void;
 
   let cost: number = 0;
-  $: cost = items.reduce((prev, curr, index, arr) => {
-    return prev + curr.price;
+  $: cost = Object.values(items.items).reduce((prev, curr) => {
+    return prev + curr.food?.price * curr.quantity;
   }, 0);
 </script>
 
 <div>
   <h1>Cart:</h1>
   <ul>
-    {#each items as item}
+    {#each Object.values(items.items) as item}
       <li>
-        <span>{item.name}</span>
+        <span>
+          <span>Name:</span>
+          <span>{item.food?.name}</span>
+        </span>
+        <span>
+          <span>Quantity:</span>
+          <span>{item.quantity}</span>
+        </span>
+        <button on:click={() => incrementCartItem(item)}>+</button>
+        <button
+          on:click={() => decrementCartItem(item)}
+          disabled={item.quantity <= 0}>-</button
+        >
         <button on:click={() => removeCartItem(item)}>Remove</button>
+        <input name="id" value={item.food?.id} hidden />
+        <input name="quantity" value={item.quantity} hidden />
       </li>
     {/each}
   </ul>
