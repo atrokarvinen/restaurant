@@ -33,8 +33,18 @@ export const PUT = async ({ request }) => {
       },
     },
     where: { id: id },
+    include: {
+      food: true,
+    },
   });
   console.log("updated item:", updatedItem);
 
   return json(updatedItem);
+};
+
+export const DELETE = async () => {
+  console.log("Deleting cart...");
+  await prisma.cartItem.deleteMany();
+  console.log("Cart deleted");
+  return new Response();
 };

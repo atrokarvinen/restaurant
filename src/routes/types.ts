@@ -4,9 +4,10 @@ export type Food = {
   price: number;
 };
 
-export type CartType = {
-  items: Record<number, CartItem>;
-};
+// export type CartType = {
+//   items: Record<number, CartItem>;
+// };
+export type CartType = CartItem[];
 
 export type CartItem = {
   id: number;

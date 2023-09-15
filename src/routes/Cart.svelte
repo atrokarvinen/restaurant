@@ -5,9 +5,10 @@
   export let incrementCartItem: (item: CartItem) => void;
   export let decrementCartItem: (item: CartItem) => void;
   export let removeCartItem: (item: CartItem) => void;
+  export let onOrderClicked: () => void;
 
   let cost: number = 0;
-  $: cost = Object.values(items.items).reduce((prev, curr) => {
+  $: cost = items.reduce((prev, curr) => {
     return prev + curr.food?.price * curr.quantity;
   }, 0);
 </script>
@@ -15,7 +16,7 @@
 <div>
   <h1>Cart:</h1>
   <ul>
-    {#each Object.values(items.items) as item}
+    {#each items as item}
       <li>
         <span>
           <span>Name:</span>
@@ -40,4 +41,5 @@
     <span>Cost:</span>
     <span>{cost.toFixed(2)}</span>
   </span>
+  <button on:click={onOrderClicked}>Order</button>
 </div>

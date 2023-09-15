@@ -1,6 +1,7 @@
 import prisma from "$lib/server/prisma";
 
-export const DELETE = async ({ request, params }) => {
+/** @type {import('./$types').RequestHandler} */
+export const DELETE = async ({ params }) => {
   const { id } = params;
   console.log("params:", params);
   console.log("id:", id);
