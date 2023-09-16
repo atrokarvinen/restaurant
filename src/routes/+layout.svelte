@@ -14,7 +14,10 @@
 
 <Modal />
 
-<AppShell>
+<AppShell
+	regionPage="justify-center flex"
+	slotPageContent="max-w-screen-xl border-2 place-self-center"
+>
 	<svelte:fragment slot="header">
 		<Header />
 	</svelte:fragment>

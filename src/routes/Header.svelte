@@ -4,7 +4,12 @@
 	let tabSet: number = 0;
 </script>
 
-<AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
+<AppBar
+	gridColumns="grid-cols-3"
+	slotDefault="place-self-center"
+	slotTrail="place-content-end"
+	regionRowMain="place-self-center max-w-screen-xl"
+>
 	<svelte:fragment slot="lead">
 		<a class="btn-icon variant-ghost-surface" href="/">
 			<i class="fa-solid fa-utensils" />
