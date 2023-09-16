@@ -2,9 +2,12 @@
 	import { BACKEND_URL } from '$lib/constants';
 	import axios from 'axios';
 	import Cart from './Cart.svelte';
-	import CartConfirmModal from './CartConfirmModal.svelte';
 	import FoodItem from './FoodItem.svelte';
 	import type { CartItem, CartType, Food } from './types';
+
+	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+
+	const modalStore = getModalStore();
 
 	export let data;
 	// console.log("data:", data);
@@ -77,15 +80,22 @@
 		}
 	};
 
-	let confirmOrderDialogOpen = false;
 	const onOrderClicked = async () => {
-		confirmOrderDialogOpen = true;
+		const modal: ModalSettings = {
+			type: 'confirm',
+			title: 'Confirm order',
+			body: 'Order foods in the cart. (Nothing will be ordered, this is a test app)',
+			response: (r) => {
+				if (!r) return;
+				onConfirm();
+			}
+		};
+		modalStore.trigger(modal);
 	};
 
 	const onConfirm = async () => {
 		try {
 			await axios.delete(`${BACKEND_URL}/cart`);
-			confirmOrderDialogOpen = false;
 			cartItems = [];
 		} catch (error) {
 			console.log('error confirming:', error);
@@ -102,15 +112,6 @@
 
 <i class="fa-solid fa-skull" />
 <Cart items={cartItems} {removeCartItem} {incrementCartItem} {decrementCartItem} {onOrderClicked} />
-
-{#if confirmOrderDialogOpen}
-	<CartConfirmModal
-		onCloseModal={() => {
-			confirmOrderDialogOpen = false;
-		}}
-		{onConfirm}
-	/>
-{/if}
 
 <div>
 	<h1>Foods:</h1>
