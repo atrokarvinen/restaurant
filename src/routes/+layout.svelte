@@ -3,23 +3,21 @@
 
 	// Floating UI for Popups
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-	import { Modal, storePopup } from '@skeletonlabs/skeleton';
+	import { AppShell, Modal, storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	import { initializeStores } from '@skeletonlabs/skeleton';
+	import Header from './Header.svelte';
 
 	initializeStores();
 </script>
 
 <Modal />
 
-<div>
-	<nav>
-		<a href="/">Home</a>
-		<a href="admin">Admin</a>
-		<a href="login">Login</a>
-	</nav>
-	<main>
-		<slot />
-	</main>
-</div>
+<AppShell>
+	<svelte:fragment slot="header">
+		<Header />
+	</svelte:fragment>
+
+	<slot />
+</AppShell>
