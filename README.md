@@ -14,25 +14,49 @@ npm create svelte@latest
 npm create svelte@latest my-app
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Skeleton UI
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm create skeleton-app@latest my-skeleton-app
 ```
 
-## Building
+- Pick theme
+- Pick Typescript
 
-To create a production version of your app:
+### Change theme
+
+Modify `<body>` in `app.html`:
 
 ```bash
-npm run build
+<body data-sveltekit-preload-data="hover" data-theme="skeleton">
 ```
 
-You can preview the production build with `npm run preview`.
+## Fontawesome
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```bash
+npm install --save @fortawesome/fontawesome-free
+```
+
+Add styles to `app.html`:
+
+```bash
+<head>
+  <link href="./../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet" />
+  <link href="./../node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet" />
+  <link href="./../node_modules/@fortawesome/fontawesome-free/css/regular.css" rel="stylesheet" />
+</head>
+```
+
+### Usage
+
+Solid:
+
+```bash
+<i class="fa-solid fa-skull" />
+```
+
+Regular (borders only):
+
+```bash
+<i class="fa-regular fa-skull" />
+```

@@ -1,13 +1,17 @@
 <script lang="ts">
-  import type { Food } from "./types";
+	import Button from '$lib/components/Button.svelte';
+	import type { Food } from './types';
 
-  export let food: Food;
-  export let addToCart: (food: Food) => void;
-  export let disabled: boolean;
+	export let food: Food;
+	export let addToCart: (food: Food) => void;
+	export let disabled: boolean;
 </script>
 
 <article>
-  <span>{food.name}</span>
-  <span>{food.price}</span>
-  <button on:click={() => addToCart(food)} {disabled}>+ Add to cart</button>
+	<span>{food.name}</span>
+	<span>{food.price}</span>
+	<Button on:click={() => addToCart(food)} {disabled}>
+		<i class="fa-solid fa-plus" />
+		<span> Add to cart </span>
+	</Button>
 </article>

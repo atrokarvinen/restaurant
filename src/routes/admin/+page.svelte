@@ -1,24 +1,25 @@
 <script lang="ts">
-  import type { Food } from "../types";
-  import CreatedFoodList from "./CreatedFoodList.svelte";
-  import EditFoodForm from "./EditFoodForm.svelte";
+	import Button from '$lib/components/Button.svelte';
+	import type { Food } from '../types';
+	import CreatedFoodList from './CreatedFoodList.svelte';
+	import EditFoodForm from './EditFoodForm.svelte';
 
-  export let form;
-  export let data;
+	export let form;
+	export let data;
 
-  $: console.log("errors:", form?.errors);
-  $: console.log("form submitted successfully:", form?.success);
+	$: console.log('errors:', form?.errors);
+	$: console.log('form submitted successfully:', form?.success);
 
-  let foods: Food[];
-  $: foods = data.foods;
+	let foods: Food[];
+	$: foods = data.foods;
 
-  let foodToEdit: Food | undefined;
-  const onEditFood = (food: Food) => {
-    foodToEdit = food;
-  };
-  const onAddNew = () => {
-    foodToEdit = undefined;
-  };
+	let foodToEdit: Food | undefined;
+	const onEditFood = (food: Food) => {
+		foodToEdit = food;
+	};
+	const onAddNew = () => {
+		foodToEdit = undefined;
+	};
 </script>
 
 <h1>Admin</h1>
@@ -28,4 +29,4 @@
 
 <CreatedFoodList {foods} {onEditFood} />
 
-<button on:click={onAddNew}>+ Add new</button>
+<Button on:click={onAddNew}>+ Add new</Button>
