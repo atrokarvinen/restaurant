@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { axios } from '$lib/axios';
-	import FoodItem from './FoodItem.svelte';
 	import type { CartItem, CartType, Food } from './types';
 
 	export let foods: Food[];
@@ -30,10 +29,32 @@
 	};
 </script>
 
-<ul>
+<!-- <ul>
 	{#each foods as food}
 		<li>
 			<FoodItem {food} {addToCart} disabled={foodInCart(food.id)} />
 		</li>
 	{/each}
-</ul>
+</ul> -->
+
+<div class="grid gap-4 grid-cols-3">
+	{#each foods as food}
+		<article class="card p-4 space-y-2">
+			<img class="object-cover h-48 w-64" src={food.img} alt={food.name} />
+			<div class="flex align-middle gap-2 place-content-between">
+				<div class="flex flex-col text-lg">
+					<span>{food.name}</span>
+					<span>{`${food.price.toFixed(2)} €`}</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<button class="btn-icon variant-filled-primary">
+						<i class="fa-solid fa-plus" />
+					</button>
+					<button class="btn-icon variant-filled-error">
+						<i class="fa-solid fa-minus" />
+					</button>
+				</div>
+			</div>
+		</article>
+	{/each}
+</div>

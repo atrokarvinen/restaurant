@@ -9,7 +9,7 @@
 
 <article>
 	<span>{food.name}</span>
-	<span>{food.price}</span>
+	<span>{food.price.toFixed(2)}</span>
 	<Button on:click={() => addToCart(food)} {disabled}>
 		<i class="fa-solid fa-plus" />
 		<span> Add to cart </span>
