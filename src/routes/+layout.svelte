@@ -16,7 +16,7 @@
 
 <AppShell
 	regionPage="justify-center flex"
-	slotPageContent="max-w-screen-xl border-2 place-self-center"
+	slotPageContent="max-w-screen-xl border-2 place-self-center p-5"
 >
 	<svelte:fragment slot="header">
 		<Header />

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import type { CartItem, CartType } from './types';
+	import type { CartItem, CartType } from '../types';
 
 	export let items: CartType;
 	export let incrementCartItem: (item: CartItem) => void;
