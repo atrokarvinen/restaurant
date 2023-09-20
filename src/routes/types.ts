@@ -5,13 +5,13 @@ export type Food = {
 	img: string;
 };
 
-// export type CartType = {
-//   items: Record<number, CartItem>;
-// };
-export type CartType = CartItem[];
-
 export type CartItem = {
 	id: number;
 	food: Food;
 	quantity: number;
+};
+
+export type Cart = {
+	id: number;
+	items: CartItem[];
 };

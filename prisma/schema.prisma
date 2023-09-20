@@ -26,12 +26,12 @@ model CartItem {
   food   Food @relation(fields: [foodId], references: [id])
   foodId Int
 
-  Cart Cart?
+  Cart   Cart @relation(fields: [cartId], references: [id])
+  cartId Int
 }
 
 model Cart {
   id Int @id @default(autoincrement())
 
-  items      CartItem @relation(fields: [cartItemId], references: [id])
-  cartItemId Int      @unique
+  items CartItem[]
 }

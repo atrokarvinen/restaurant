@@ -1,17 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import type { CartItem, CartType } from '../types';
+	import type { Cart } from '../types';
+	import CartActions from './CartActions.svelte';
+	import { calculateCartCost } from './cart-utils';
 
-	export let items: CartType;
-	export let incrementCartItem: (item: CartItem) => void;
-	export let decrementCartItem: (item: CartItem) => void;
-	export let removeCartItem: (item: CartItem) => void;
+	export let cart: Cart;
 	export let onOrderClicked: () => void;
 
-	let cost: number = 0;
-	$: cost = items.reduce((prev, curr) => {
-		return prev + curr.food?.price * curr.quantity;
-	}, 0);
+	$: items = cart.items;
+	$: cost = calculateCartCost(cart);
 </script>
 
 <div>
@@ -27,15 +24,7 @@
 					<span>Quantity:</span>
 					<span>{item.quantity}</span>
 				</span>
-				<button class="btn-icon variant-filled-primary" on:click={() => incrementCartItem(item)}
-					><i class="fa-solid fa-plus" /></button
-				>
-				<button
-					class="btn-icon variant-filled-primary"
-					on:click={() => decrementCartItem(item)}
-					disabled={item.quantity <= 0}><i class="fa-solid fa-minus" /></button
-				>
-				<Button on:click={() => removeCartItem(item)}>Remove</Button>
+				<CartActions cartId={cart.id} cartItem={item} />
 			</li>
 		{/each}
 	</ul>

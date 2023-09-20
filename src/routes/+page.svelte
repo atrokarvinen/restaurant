@@ -1,25 +1,43 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import Menu from './Menu.svelte';
-	import type { CartType, Food } from './types';
+	import { cartStore } from './cart/cartStore';
+	import type { Cart, Food } from './types';
 
 	export let data;
 	// console.log("data:", data);
 	const loadedFoods = data.foodDtos;
-	const loadedCartItems = data.cartItems;
-
+	const loadedCart = data.cart;
 	let foods: Food[] = loadedFoods ?? [];
+	let cart: Cart = { id: -1, items: [] };
 
-	// let cartItems: CartType = { items: {} };
-	let asDict = loadedCartItems.reduce((prev, curr) => {
-		return { ...prev, [curr.id]: curr };
-	}, {});
-	console.log('asDict:', asDict);
+	const unsubscribe = cartStore.subscribe((reduxCart) => {
+		console.log('cart updated:', reduxCart);
+		cart = { id: reduxCart.id, items: reduxCart.items };
+	});
 
-	let cartItems: CartType = loadedCartItems ?? [];
+	onDestroy(() => {
+		console.log('on destroy');
+		unsubscribe();
+	});
 
-	console.log('[UI] cartItems:', cartItems);
+	// let cart = loadedCart ?? { id: 1, items: [] };
+	console.log('loadedCart:', loadedCart);
+
+	if (!!loadedCart) {
+		cartStore.set({
+			id: loadedCart.id,
+			items: loadedCart.items.map((i) => ({
+				id: i.id,
+				food: i.food,
+				quantity: i.quantity
+			}))
+		});
+	}
+
+	console.log('[UI] cart:', cart);
 </script>
 
 <div>
-	<Menu {foods} {cartItems} />
+	<Menu {foods} {cart} />
 </div>

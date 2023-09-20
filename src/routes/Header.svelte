@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { AppBar, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
-	let tabSet: number = 0;
+	import { calculateCartCost } from './cart/cart-utils';
+	import { cartStore } from './cart/cartStore';
+
+	$: cart = $cartStore;
+	$: count = cart.items.length;
+	$: cost = calculateCartCost(cart);
 </script>
 
 <AppBar
@@ -27,7 +32,7 @@
 			class={`btn variant-ghost-${$page.url.pathname === '/cart' ? 'primary' : 'surface'}`}
 			href="/cart"
 		>
-			<i class="fa-solid fa-cart-shopping" /><span>Cart</span>
+			<i class="fa-solid fa-cart-shopping" /><span>{`Cart (${count}), ${cost.toFixed(2)} €`}</span>
 		</a>
 	</svelte:fragment>
 </AppBar>

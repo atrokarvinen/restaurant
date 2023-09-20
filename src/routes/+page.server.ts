@@ -17,12 +17,13 @@ export const load = async () => {
 	const foods = await prisma.food.findMany({});
 	const foodDtos = foods;
 
-	const cartItems = await prisma.cartItem.findMany({ include: { food: true } });
-	console.log('cartItems: ', cartItems);
+	let cart = await prisma.cart.findFirst({ include: { items: { include: { food: true } } } });
+	console.log('cart: ', cart);
+	console.log('cartItems: ', cart?.items);
 
 	console.log('dto:', foodDtos);
 
-	return { foodDtos, cartItems };
+	return { foodDtos, cart };
 };
 
 /** @type {import('./$types').Actions} */
