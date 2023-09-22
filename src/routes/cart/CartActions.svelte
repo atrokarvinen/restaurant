@@ -49,7 +49,7 @@
 	<i class="fa-solid fa-plus" />
 </button>
 <button
-	class="btn-icon variant-filled-error"
+	class="btn-icon variant-filled-error disabled:opacity-25 disabled:cursor-not-allowed"
 	on:click={() => changeCartItemQuantity(cartItem.id, -1)}
 	disabled={cartItem.quantity <= 0}
 >
