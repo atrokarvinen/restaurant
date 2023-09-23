@@ -9,10 +9,10 @@ export const load = async () => {
 export const actions = {
 	delete: async ({ request }) => {
 		const data = await request.formData();
-		const id = data.get('id');
+		const id = Number(data.get('id'));
 
 		try {
-			const deletedFood = await prisma.food.delete({ where: { id: +id! } });
+			const deletedFood = await prisma.food.delete({ where: { id } });
 			console.log('deletedFood:', deletedFood);
 			return { success: true, deletedFood };
 		} catch (error) {

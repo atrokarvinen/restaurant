@@ -26,7 +26,7 @@ export const actions = {
 
 		const createdFood = await prisma.food.create({
 			data: {
-				img: '',
+				img: 'generic-food.jpg',
 				name: foodToCreate.name,
 				price: foodToCreate.price
 			}

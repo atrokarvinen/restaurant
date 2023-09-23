@@ -60,3 +60,7 @@ Regular (borders only):
 ```bash
 <i class="fa-regular fa-skull" />
 ```
+
+# Image attributes
+
+<a href="https://www.freepik.com/free-vector/dining-set_6027751.htm#query=cutlery%20cartoon&position=49&from_view=keyword&track=ais">Image by brgfx</a> on Freepik

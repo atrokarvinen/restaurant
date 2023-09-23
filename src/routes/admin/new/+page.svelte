@@ -3,13 +3,17 @@
 	import { getToastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import type { Food } from '../../types';
 	import FoodForm from '../FoodForm.svelte';
+	import { foodNames } from './foodNames';
 
 	export let form;
 
 	let defaultValues: Food | undefined;
 
 	const autofill = () => {
-		defaultValues = { id: undefined as any, img: '', name: 'test', price: 10.43 };
+		const foodNameIndex = Math.round(Math.random() * (foodNames.length - 1));
+		const name = foodNames[foodNameIndex];
+		const price = Math.round((5 + Math.random() * 20) * 100) / 100;
+		defaultValues = { id: undefined as any, img: '', name, price };
 	};
 
 	const toastStore = getToastStore();
@@ -29,4 +33,4 @@
 
 <FoodForm errors={form?.errors} {defaultValues} />
 
-<Button on:click={autofill} class="mt-3">Auto fill</Button>
+<Button on:click={autofill} class="mt-3">Generate for me</Button>

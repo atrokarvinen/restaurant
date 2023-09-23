@@ -6,7 +6,7 @@
 	export let cart: Cart;
 </script>
 
-<div class="grid gap-4 grid-cols-3">
+<div class="grid gap-4 md:grid-cols-3">
 	{#each foods as food}
 		<MenuItem {food} {cart} />
 	{/each}

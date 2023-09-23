@@ -4,7 +4,12 @@
 
 	export let foods: Food[];
 
-	const unknownFood: Food = { id: -1, img: '', name: 'Unknown food', price: 0 };
+	const unknownFood: Food = {
+		id: -1,
+		img: '',
+		name: 'Unknown food (this is a mystery food for testing)',
+		price: Number.POSITIVE_INFINITY
+	};
 </script>
 
 <h1>Existing foods:</h1>

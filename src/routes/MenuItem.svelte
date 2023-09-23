@@ -35,9 +35,9 @@
 	};
 </script>
 
-<article class="card p-4 space-y-2 text-lg">
-	<img class="object-cover h-48 w-64" src={food.img} alt={food.name} />
-	<div class="flex align-middle gap-2 place-content-between">
+<article class="card p-4 space-y-2 text-lg max-w-xs">
+	<img class="object-cover h-48 w-full" src={food.img} alt={food.name} />
+	<div class="flex flex-wrap align-middle gap-2 place-content-between">
 		<div class="flex flex-col">
 			<span>{food.name}</span>
 			<span>{`${food.price.toFixed(2)} €`}</span>
