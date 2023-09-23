@@ -3,6 +3,6 @@
 	interface $$Props extends HTMLButtonAttributes {}
 </script>
 
-<button class="btn variant-filled-primary" {...$$props} on:click>
+<button {...$$props} class={`btn variant-filled-primary ${$$props.class}`} on:click>
 	<slot />
 </button>

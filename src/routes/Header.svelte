@@ -23,8 +23,8 @@
 	<svelte:fragment>
 		<TabGroup>
 			<TabAnchor href="/" selected={$page.url.pathname === '/'}>Home</TabAnchor>
-			<TabAnchor href="/admin" selected={$page.url.pathname === '/admin'}>Admin</TabAnchor>
-			<TabAnchor href="/login" selected={$page.url.pathname === '/login'}>Login</TabAnchor>
+			<TabAnchor href="/admin" selected={$page.url.pathname.includes('/admin')}>Admin</TabAnchor>
+			<TabAnchor href="/login" selected={$page.url.pathname.includes('/login')}>Login</TabAnchor>
 		</TabGroup>
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
