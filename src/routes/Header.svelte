@@ -1,12 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { AppBar, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
-	import { calculateCartCost } from './cart/cart-utils';
-	import { cartStore } from './cart/cartStore';
-
-	$: cart = $cartStore;
-	$: count = cart.items.length;
-	$: cost = calculateCartCost(cart);
+	import HeaderCart from './HeaderCart.svelte';
 </script>
 
 <AppBar
@@ -28,11 +23,6 @@
 		</TabGroup>
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
-		<a
-			class={`btn variant-ghost-${$page.url.pathname === '/cart' ? 'primary' : 'surface'}`}
-			href="/cart"
-		>
-			<i class="fa-solid fa-cart-shopping" /><span>{`Cart (${count}), ${cost.toFixed(2)} €`}</span>
-		</a>
+		<HeaderCart />
 	</svelte:fragment>
 </AppBar>
