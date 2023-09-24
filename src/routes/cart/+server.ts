@@ -2,7 +2,9 @@ import prisma from '$lib/server/prisma';
 import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
-export const POST = async ({ request }) => {
+export const POST = async ({ request, locals }) => {
+	const userId = locals.userId;
+	console.log('userId:', userId);
 	const payload = await request.json();
 	console.log('payload:', payload);
 
@@ -25,7 +27,9 @@ export const POST = async ({ request }) => {
 	return json(cartItem);
 };
 
-export const PUT = async ({ request }) => {
+export const PUT = async ({ request, locals }) => {
+	const userId = locals.userId;
+	console.log('userId:', userId);
 	const payload = await request.json();
 	console.log('update payload:', payload);
 	const { id, change } = payload;
@@ -49,7 +53,9 @@ export const PUT = async ({ request }) => {
 	return json(updatedItem);
 };
 
-export const DELETE = async () => {
+export const DELETE = async ({ locals }) => {
+	const userId = locals.userId;
+	console.log('userId:', userId);
 	console.log('Deleting cart...');
 	await prisma.cartItem.deleteMany();
 	console.log('Cart deleted');

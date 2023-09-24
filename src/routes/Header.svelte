@@ -2,6 +2,10 @@
 	import { page } from '$app/stores';
 	import { AppBar, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 	import HeaderCart from './HeaderCart.svelte';
+	import { authStore, isAdmin } from './login/authStore';
+
+	$: isAdminVisible = isAdmin($authStore);
+	$: username = $authStore?.name;
 </script>
 
 <AppBar
@@ -14,11 +18,17 @@
 		<a class="btn-icon variant-ghost-surface" href="/">
 			<i class="fa-solid fa-utensils" />
 		</a>
+		<div>
+			<span>User:</span>
+			<span>{username}</span>
+		</div>
 	</svelte:fragment>
 	<svelte:fragment>
 		<TabGroup>
 			<TabAnchor href="/" selected={$page.url.pathname === '/'}>Home</TabAnchor>
-			<TabAnchor href="/admin" selected={$page.url.pathname.includes('/admin')}>Admin</TabAnchor>
+			{#if isAdminVisible}
+				<TabAnchor href="/admin" selected={$page.url.pathname.includes('/admin')}>Admin</TabAnchor>
+			{/if}
 			<TabAnchor href="/login" selected={$page.url.pathname.includes('/login')}>Login</TabAnchor>
 		</TabGroup>
 	</svelte:fragment>

@@ -15,3 +15,15 @@ export type Cart = {
 	id: number;
 	items: CartItem[];
 };
+
+export type User = {
+	id: number;
+	name: string;
+	group: UserGroup;
+};
+
+export enum UserGroup {
+	UNKNOWN,
+	ADMIN,
+	CUSTOMER
+}

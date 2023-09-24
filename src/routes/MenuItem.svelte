@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { axios } from '$lib/axios';
+	import { getErrorMessage } from '$lib/errorHandling';
+	import { getToastStore } from '@skeletonlabs/skeleton';
 	import CartActions from './cart/CartActions.svelte';
 	import { cartStore } from './cart/cartStore';
-	import type { Cart, CartItem, Food } from './types';
+	import type { Cart, Food } from './types';
 
 	export let food: Food;
 	export let cart: Cart;
+
+	const toast = getToastStore();
 
 	const addToCart = async (food: Food) => {
 		console.log('Added to cart:', food);
@@ -22,17 +26,15 @@
 				return newCart;
 			});
 		} catch (error) {
-			console.log('error adding to cart: ', error);
+			toast.trigger({
+				message: getErrorMessage(error),
+				background: 'variant-filled-error',
+				timeout: 2000
+			});
 		}
 	};
 
 	$: cartItem = cart.items.find((i) => i.food.id === food.id);
-
-	const foodInCart = (foodId: number, cartItems: CartItem[]) => {
-		const foodIdsInCart = cartItems.map((i) => i.food.id);
-		const exists = foodIdsInCart.some((id) => id === foodId);
-		return exists;
-	};
 </script>
 
 <article class="card p-4 space-y-2 text-lg max-w-xs">

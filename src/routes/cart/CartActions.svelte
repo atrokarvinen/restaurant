@@ -1,21 +1,27 @@
 <script lang="ts">
 	import { axios } from '$lib/axios';
+	import { getErrorMessage } from '$lib/errorHandling';
+	import { getToastStore } from '@skeletonlabs/skeleton';
 	import type { CartItem } from '../types';
 	import { cartStore } from './cartStore';
 
 	export let cartItem: CartItem;
 	export let cartId: number;
 
+	const toast = getToastStore();
 	const removeFromCart = async () => {
 		try {
-			// const response = await axios.delete(`/cart/${cartId}/food/${food.id}`);
 			const response = await axios.delete(`/cart/${cartId}/item/${cartItem.id}`);
 			cartStore.update((prev) => {
 				const newCart = { ...prev, items: prev.items.filter((i) => i.id !== cartItem.id) };
 				return newCart;
 			});
 		} catch (error) {
-			console.log('error removing from cart: ', error);
+			toast.trigger({
+				message: getErrorMessage(error),
+				background: 'variant-filled-error',
+				timeout: 2000
+			});
 		}
 	};
 
@@ -37,7 +43,11 @@
 				return newCart;
 			});
 		} catch (error) {
-			console.log('failed to change cart item quantity', error);
+			toast.trigger({
+				message: getErrorMessage(error),
+				background: 'variant-filled-error',
+				timeout: 2000
+			});
 		}
 	};
 </script>

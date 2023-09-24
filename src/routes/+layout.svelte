@@ -10,8 +10,15 @@
 
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import Header from './Header.svelte';
+	import { authStore } from './login/authStore';
+
+	export let data;
 
 	initializeStores();
+
+	console.log('[layout] mounts');
+
+	$: $authStore = data.user;
 </script>
 
 <Modal />

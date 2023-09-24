@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { axios } from '$lib/axios';
-	import { getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
+	import { getErrorMessage } from '$lib/errorHandling';
+	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import Cart from './Cart.svelte';
 	import { cartStore } from './cartStore';
 
@@ -21,12 +22,17 @@
 		modalStore.trigger(modal);
 	};
 
+	const toast = getToastStore();
 	const onConfirm = async () => {
 		try {
 			await axios.delete('/cart');
 			cartStore.set({ id: -1, items: [] });
 		} catch (error) {
-			console.log('error confirming:', error);
+			toast.trigger({
+				message: getErrorMessage(error),
+				background: 'variant-filled-error',
+				timeout: 2000
+			});
 		}
 	};
 </script>
