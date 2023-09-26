@@ -5,7 +5,7 @@ export const load = async ({ locals }) => {
 	try {
 		await seedDatabase();
 	} catch (error) {
-		console.log('No connection to db');
+		console.log('No connection to db:', error);
 		return { foodDtos: [], cartItems: [] };
 	}
 	const foods = await prisma.food.findMany({});

@@ -21,7 +21,10 @@
 	<Input label="Price" value={defaultValues?.price ?? ''} error={errors?.price} />
 
 	<div class="flex flex-col w-48">
-		<Button>{isEdit ? 'Update' : 'Create'}</Button>
+		<div>
+			<Button>{isEdit ? 'Update' : 'Create'}</Button>
+			<a class="btn variant-filled-secondary" href="/admin">Cancel</a>
+		</div>
 		<SlideToggle name="autofail" class="mt-4">Fail request</SlideToggle>
 	</div>
 </form>

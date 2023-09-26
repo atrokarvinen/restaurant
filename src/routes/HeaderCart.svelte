@@ -23,7 +23,7 @@
 	href="/cart"
 	on:animationend={() => (popCart = false)}
 >
-	<i class="fa-solid fa-cart-shopping" /><span>{`Cart (${count}), ${cost.toFixed(2)} €`}</span>
+	<i class="fa-solid fa-cart-shopping" /><span>{`${cost.toFixed(2)} €`}</span>
 </a>
 
 <style>
