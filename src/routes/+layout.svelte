@@ -1,9 +1,4 @@
 <script lang="ts">
-	import '@fortawesome/fontawesome-free';
-	import '@fortawesome/free-regular-svg-icons';
-	import '@fortawesome/free-solid-svg-icons';
-	import '../app.postcss';
-	// Floating UI for Popups
 	import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 	import {
 		AppShell,
@@ -13,6 +8,7 @@
 		getDrawerStore,
 		storePopup
 	} from '@skeletonlabs/skeleton';
+	import '../app.postcss';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	import Button from '$lib/components/Button.svelte';
