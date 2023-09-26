@@ -1,9 +1,13 @@
 import { getUser } from '$lib/auth.js';
+import prisma from '$lib/server/prisma.js';
 
 export const load = async ({ cookies }) => {
-	console.log('[layout] loading...');
-
 	const user = getUser(cookies);
-
-	return { user };
+	const cart = user
+		? await prisma.cart.findFirst({
+				where: { userId: user.id },
+				include: { items: { include: { food: true } } }
+		  })
+		: undefined;
+	return { user, cart };
 };

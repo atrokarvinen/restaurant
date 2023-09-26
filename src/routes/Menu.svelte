@@ -1,13 +1,12 @@
 <script lang="ts">
 	import MenuItem from './MenuItem.svelte';
-	import type { Cart, Food } from './types';
+	import type { Food } from './types';
 
 	export let foods: Food[];
-	export let cart: Cart;
 </script>
 
 <div class="grid gap-4 md:grid-cols-3">
 	{#each foods as food}
-		<MenuItem {food} {cart} />
+		<MenuItem {food} />
 	{/each}
 </div>

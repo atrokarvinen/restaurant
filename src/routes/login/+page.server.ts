@@ -1,8 +1,9 @@
+import prisma from '$lib/server/prisma.js';
 import { fail } from '@sveltejs/kit';
 import type { User } from '../types.js';
-import { users } from './users.js';
 
 export const load = async () => {
+	const users = await prisma.user.findMany();
 	return { users };
 };
 
@@ -15,16 +16,29 @@ export const actions = {
 
 		const userId = Number(data.get('user'));
 
-		const user = users.find((u) => u.id === userId);
+		const user = await prisma.user.findFirst({ where: { id: userId } });
 		if (!user) return fail(404, { error: 'User not found' });
 
 		cookies.set('user', JSON.stringify(user));
 
+		let cart = await prisma.cart.findUnique({
+			where: { userId },
+			include: { items: { include: { food: true } } }
+		});
+		if (!cart) {
+			console.log('cart does not exist... creating new');
+			cart = await prisma.cart.create({
+				data: { userId },
+				include: { items: { include: { food: true } } }
+			});
+			console.log('created cart:', cart);
+		}
+
 		console.log('logged in user "%s"', user.name);
 
-		return { user };
+		return { user, cart };
 	},
-	logout: async ({ request, cookies }) => {
+	logout: async ({ cookies }) => {
 		console.log('logging out...');
 
 		const userCookie = cookies.get('user');

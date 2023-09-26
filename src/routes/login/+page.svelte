@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/Button.svelte';
+	import { cartStore, defaultCart } from '../cart/cartStore';
 	import type { User } from '../types';
 	import { authStore } from './authStore';
 
@@ -15,9 +16,11 @@
 	$: {
 		if (form?.user) {
 			$authStore = form.user;
+			$cartStore = form.cart ?? defaultCart;
 			selectedValue = undefined;
 		} else if (form?.logoutSuccess) {
 			$authStore = undefined;
+			$cartStore = defaultCart;
 		}
 	}
 	$: loginDisabled = $authStore !== undefined;

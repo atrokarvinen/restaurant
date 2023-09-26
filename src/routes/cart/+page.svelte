@@ -3,7 +3,7 @@
 	import { getErrorMessage } from '$lib/errorHandling';
 	import { getModalStore, getToastStore, type ModalSettings } from '@skeletonlabs/skeleton';
 	import Cart from './Cart.svelte';
-	import { cartStore } from './cartStore';
+	import { cartStore, defaultCart } from './cartStore';
 
 	$: cart = $cartStore;
 
@@ -26,7 +26,7 @@
 	const onConfirm = async () => {
 		try {
 			await axios.delete('/cart');
-			cartStore.set({ id: -1, items: [] });
+			cartStore.set(defaultCart);
 		} catch (error) {
 			toast.trigger({
 				message: getErrorMessage(error),

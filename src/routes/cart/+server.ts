@@ -8,16 +8,9 @@ export const POST = async ({ request, locals }) => {
 	const payload = await request.json();
 	console.log('payload:', payload);
 
-	let cart = await prisma.cart.findFirst({ where: { id: payload.cartId } });
-	if (!cart) {
-		console.log('cart does not exist... creating new');
-		cart = await prisma.cart.create({ data: {} });
-		console.log('created cart:', cart);
-	}
-
 	const cartItem = await prisma.cartItem.create({
 		data: {
-			cartId: cart.id,
+			cartId: payload.cartId,
 			quantity: payload.quantity,
 			foodId: payload.food.id
 		}

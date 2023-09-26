@@ -10,15 +10,17 @@
 
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import Header from './Header.svelte';
+	import { cartStore, defaultCart } from './cart/cartStore';
 	import { authStore } from './login/authStore';
 
 	export let data;
 
 	initializeStores();
 
-	console.log('[layout] mounts');
-
 	$: $authStore = data.user;
+	$: $cartStore = data.cart ?? defaultCart;
+
+	$: console.log('[UI] loaded cart:', data.cart);
 </script>
 
 <Modal />

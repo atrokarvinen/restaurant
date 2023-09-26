@@ -1,15 +1,20 @@
 import { AxiosError, isAxiosError } from 'axios';
 
 export const getErrorMessage = (error: any) => {
+	let message = '';
 	if (isAxiosError(error)) {
 		const axiosError: AxiosError = error;
 
 		if (axiosError.response?.data) {
-			return axiosError.response.data;
+			message = axiosError.response.data as any;
+		} else {
+			message = axiosError.message;
 		}
-
-		return axiosError.message;
 	} else {
-		return error.message;
+		message = error.message;
 	}
+
+	console.log('Error message:', message);
+
+	return message;
 };

@@ -19,7 +19,7 @@ export type Cart = {
 export type User = {
 	id: number;
 	name: string;
-	group: UserGroup;
+	groupId: UserGroup;
 };
 
 export enum UserGroup {

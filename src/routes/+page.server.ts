@@ -1,15 +1,9 @@
-import { initialFoods } from '$lib/server/databaseSeed.js';
+import { seedDatabase } from '$lib/server/databaseSeed.js';
 import prisma from '$lib/server/prisma';
 
-export const load = async () => {
-	console.log('Loading data from server');
-
+export const load = async ({ locals }) => {
 	try {
-		// await prisma.food.deleteMany({});
-		const existingFoods = await prisma.food.findMany({});
-		if (existingFoods.length === 0) {
-			await prisma.food.createMany({ data: initialFoods });
-		}
+		await seedDatabase();
 	} catch (error) {
 		console.log('No connection to db');
 		return { foodDtos: [], cartItems: [] };
@@ -17,13 +11,9 @@ export const load = async () => {
 	const foods = await prisma.food.findMany({});
 	const foodDtos = foods;
 
-	let cart = await prisma.cart.findFirst({ include: { items: { include: { food: true } } } });
-	console.log('cart: ', cart);
-	console.log('cartItems: ', cart?.items);
+	// console.log('dto:', foodDtos);
 
-	console.log('dto:', foodDtos);
-
-	return { foodDtos, cart };
+	return { foodDtos };
 };
 
 /** @type {import('./$types').Actions} */

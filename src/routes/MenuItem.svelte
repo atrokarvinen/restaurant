@@ -4,10 +4,11 @@
 	import { getToastStore } from '@skeletonlabs/skeleton';
 	import CartActions from './cart/CartActions.svelte';
 	import { cartStore } from './cart/cartStore';
-	import type { Cart, Food } from './types';
+	import type { Food } from './types';
 
 	export let food: Food;
-	export let cart: Cart;
+
+	$: cart = $cartStore;
 
 	const toast = getToastStore();
 
@@ -21,10 +22,8 @@
 				food,
 				quantity: response.data.quantity
 			};
-			cartStore.update((prev) => {
-				const newCart = { ...prev, items: [...prev.items, newItem] };
-				return newCart;
-			});
+
+			$cartStore = { ...$cartStore, items: [...$cartStore.items, newItem] };
 		} catch (error) {
 			toast.trigger({
 				message: getErrorMessage(error),
