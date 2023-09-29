@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Food {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Float
-  img   String
+  id              Int      @id @default(autoincrement())
+  name            String
+  price           Float
+  img             String
+  cannotBeDeleted Boolean?
 
   CartItem CartItem[]
 }

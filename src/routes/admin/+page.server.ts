@@ -12,6 +12,17 @@ export const actions = {
 		const id = Number(data.get('id'));
 
 		try {
+			const food = await prisma.food.findFirst({ where: { id } });
+			if (!food) {
+				return fail(400, { error: 'Food not found', success: false });
+			}
+			if (food.cannotBeDeleted) {
+				return fail(400, {
+					error: `Food '${food.name}' is a default food and cannot be deleted`,
+					success: false
+				});
+			}
+
 			const deletedFood = await prisma.food.delete({ where: { id } });
 			console.log('deletedFood:', deletedFood);
 			return { success: true, deletedFood };
