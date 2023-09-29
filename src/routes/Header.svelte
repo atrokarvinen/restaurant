@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { AppBar, TabAnchor, TabGroup, getDrawerStore } from '@skeletonlabs/skeleton';
 	import HeaderCart from './HeaderCart.svelte';
+	import HeaderSettingsIcon from './HeaderSettingsIcon.svelte';
 	import MediaQuery from './MediaQuery.svelte';
 	import { authStore, isAdmin } from './login/authStore';
 
@@ -50,7 +51,6 @@
 	</svelte:fragment>
 	<svelte:fragment slot="trail">
 		<HeaderCart />
-		<button class="btn-icon variant-ghost-surface"><i class="fa-solid fa-cog" /></button>
-		<!-- <LightSwitch /> -->
+		<HeaderSettingsIcon />
 	</svelte:fragment>
 </AppBar>
