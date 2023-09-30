@@ -12,7 +12,7 @@ datasource db {
 
 model Food {
   id              Int      @id @default(autoincrement())
-  name            String
+  name            String   @db.VarChar(50)
   price           Float
   img             String
   cannotBeDeleted Boolean?
@@ -42,7 +42,7 @@ model Cart {
 model User {
   id Int @id @default(autoincrement())
 
-  name    String
+  name    String @db.VarChar(20)
   groupId Int
 
   cart Cart?

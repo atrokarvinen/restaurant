@@ -15,6 +15,8 @@ export const actions = {
 		let errors: { name?: string; price?: string } = {};
 		if (!price) errors = { ...errors, price: 'Price is required' };
 		if (!name) errors = { ...errors, name: 'Name is required' };
+		if (name && name.length > 50)
+			errors = { ...errors, name: 'Name must be shorter than 50 characters' };
 		if (errors.name || errors.price) {
 			return fail(400, { errors });
 		}

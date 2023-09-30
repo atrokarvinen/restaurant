@@ -16,7 +16,7 @@
 <label class="label">
 	<span> {label} </span>
 	<input class={`input ${error ? 'input-error' : ''}`} {name} {...$$props} />
-	{#if error}
-		<span class="text-error-300 pl-2">{error}</span>
-	{/if}
 </label>
+{#if error}
+	<span class="text-error-300 pl-2">{error}</span>
+{/if}
