@@ -42,7 +42,7 @@
 	<div class="mt-5 space-x-3">
 		<span>
 			<span>Total cost:</span>
-			<span>{`${cost.toFixed(2)} €`}</span>
+			<span data-testid="total-cost">{`${cost.toFixed(2)} €`}</span>
 		</span>
 		<Button on:click={onOrderClicked} disabled={isCartEmpty}>Order</Button>
 	</div>

@@ -48,7 +48,11 @@
 				<span>{`(${cartItem?.quantity})`}</span>
 				<CartActions cartId={cart.id} {cartItem} />
 			{:else}
-				<button class="btn-icon variant-filled-primary" on:click={() => addToCart(food)}>
+				<button
+					class="btn-icon variant-filled-primary"
+					on:click={() => addToCart(food)}
+					data-testid="add-to-cart"
+				>
 					<i class="fa-solid fa-plus" />
 				</button>
 			{/if}

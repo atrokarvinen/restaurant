@@ -23,7 +23,9 @@
 	href="/cart"
 	on:animationend={() => (popCart = false)}
 >
-	<i class="fa-solid fa-cart-shopping" /><span>{`${cost.toFixed(2)} €`}</span>
+	<i class="fa-solid fa-cart-shopping" data-testid="cart-icon" /><span data-testid="cart-icon-price"
+		>{`${cost.toFixed(2)} €`}</span
+	>
 </a>
 
 <style>

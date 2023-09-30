@@ -13,7 +13,7 @@
 		const foodNameIndex = Math.round(Math.random() * (foodNames.length - 1));
 		const name = foodNames[foodNameIndex];
 		const price = Math.round((5 + Math.random() * 20) * 100) / 100;
-		defaultValues = { id: undefined as any, img: '', name, price };
+		defaultValues = { id: undefined as any, img: '', name, price, cannotBeDeleted: false };
 	};
 
 	const toastStore = getToastStore();
@@ -28,8 +28,6 @@
 		}
 	}
 </script>
-
-<div>New</div>
 
 <FoodForm errors={form?.errors} {defaultValues} />
 

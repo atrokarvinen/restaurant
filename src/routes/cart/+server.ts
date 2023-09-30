@@ -50,7 +50,7 @@ export const DELETE = async ({ locals }) => {
 	const userId = locals.userId;
 	console.log('userId:', userId);
 	console.log('Deleting cart...');
-	await prisma.cartItem.deleteMany();
+	await prisma.cartItem.deleteMany({ where: { Cart: { userId } } });
 	console.log('Cart deleted');
 	return new Response();
 };

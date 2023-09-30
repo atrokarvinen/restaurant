@@ -3,6 +3,7 @@ export type Food = {
 	name: string;
 	price: number;
 	img: string;
+	cannotBeDeleted: boolean | null;
 };
 
 export type CartItem = {

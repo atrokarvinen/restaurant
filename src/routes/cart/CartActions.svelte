@@ -26,6 +26,7 @@
 	};
 
 	const changeCartItemQuantity = async (cartItemId: number, change: number) => {
+		loading = true;
 		try {
 			const response = await axios.put('/cart', {
 				id: cartItemId,
@@ -49,22 +50,32 @@
 				timeout: 2000
 			});
 		}
+		loading = false;
 	};
+
+	let loading = false;
 </script>
 
 <button
+	data-testid="increment"
 	class="btn-icon variant-filled-primary"
 	on:click={() => changeCartItemQuantity(cartItem.id, 1)}
+	disabled={loading}
 >
 	<i class="fa-solid fa-plus" />
 </button>
 <button
+	data-testid="decrement"
 	class="btn-icon variant-filled-error disabled:opacity-25 disabled:cursor-not-allowed"
 	on:click={() => changeCartItemQuantity(cartItem.id, -1)}
-	disabled={cartItem.quantity <= 0}
+	disabled={cartItem.quantity <= 0 || loading}
 >
 	<i class="fa-solid fa-minus" />
 </button>
-<button class="btn-icon variant-filled-error" on:click={removeFromCart}>
+<button
+	data-testid="remove-from-cart"
+	class="btn-icon variant-filled-error"
+	on:click={removeFromCart}
+>
 	<i class="fa-solid fa-trash" />
 </button>

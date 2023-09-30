@@ -24,8 +24,6 @@
 	}
 </script>
 
-<div>Edit</div>
-
 {#if !defaultValues}
 	<div class="alert variant-filled-error">
 		<i class="fa-solid fa-alert" />

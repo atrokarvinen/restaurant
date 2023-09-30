@@ -8,7 +8,8 @@
 		id: -1,
 		img: '',
 		name: 'Unknown food (this is a mystery food for testing)',
-		price: Number.POSITIVE_INFINITY
+		price: Number.POSITIVE_INFINITY,
+		cannotBeDeleted: false
 	};
 </script>
 

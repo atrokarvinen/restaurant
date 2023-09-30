@@ -38,7 +38,8 @@
 	{:else}
 		<p>Select user:</p>
 		<form method="post" action="?/login" use:enhance class="space-y-2">
-			<select class="select" bind:value={selectedValue} name="user">
+			<label for="username">Username:</label>
+			<select class="select" bind:value={selectedValue} name="user" id="username">
 				{#each options as option}
 					<option value={option.id}>{option.name}</option>
 				{/each}
