@@ -23,6 +23,9 @@ export const actions = {
 
 		if (autofail === 'on') return fail(400, { apiError: 'Request failed' });
 
+		const existingFoodCount = (await prisma.food.findMany()).length;
+		if (existingFoodCount > 20) return fail(400, { apiError: 'Cannot create more than 20 foods' });
+
 		const foodToCreate = { name: name!.toString(), price: price ? +price : 0 };
 		console.log('foodToCreate:', foodToCreate);
 
